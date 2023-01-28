@@ -34,7 +34,7 @@
 			    <c:forEach var="vo" items="${list}">
 				      <tr>
 				        <td> ${vo.idx}</td>
-				        <td><a href="<c:url value='/get.do?bno=${vo.idx}' />">${vo.title}</a></td>
+				        <td><a href="<c:url value='/get.do/${vo.idx}' />">${vo.title}</a></td>
 				        <td>${vo.count}</td>
 				        <td>${vo.writer}</td>
 				      </tr>

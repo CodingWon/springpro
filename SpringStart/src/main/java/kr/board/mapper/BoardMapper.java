@@ -10,4 +10,5 @@ import kr.board.entity.Board;
 public interface BoardMapper {
 
 	public List<Board> getList();
+	public Board getMember(Integer idx);
 }

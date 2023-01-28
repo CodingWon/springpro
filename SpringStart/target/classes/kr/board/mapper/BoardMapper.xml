@@ -6,4 +6,9 @@
 	<select id="getList" resultType="boardVO">
 		select * from myboard order by idx desc
 	</select> 
+	
+	
+	<select id="getMember" resultType="boardVO">
+		select * from myboard where idx = #{idx}
+	</select>
 </mapper>
