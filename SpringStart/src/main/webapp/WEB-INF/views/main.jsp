@@ -13,7 +13,7 @@
 <body>
  
 <div class="container">
-  <h2>Spring 01</h2>
+  <h2>Spring 02</h2>
   <div class="panel panel-default">
     <div class="panel-heading">Panel Heading</div>
     <div class="panel-body">Panel Content</div>

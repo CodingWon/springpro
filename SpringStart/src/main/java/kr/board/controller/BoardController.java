@@ -16,23 +16,9 @@ import kr.board.mapper.BoardMapper;
 @Controller
 public class BoardController {
 
-	@Autowired
-	private BoardMapper boardMapper;
-	
-	@RequestMapping("/boardList.do")
-	public String boardList (Model model) {
-		List<Board> list = boardMapper.getList();
-		model.addAttribute("list",list);
-		return "boardList";
-	}
-	
-	@GetMapping("/get.do/{idx}")
-	public String getMember(Model model, @PathVariable("idx") int idx) {
-		
-		Board board = boardMapper.getMember(idx);
-		model.addAttribute("vo",board);
-		
-		return "memberContent";
+	@RequestMapping("/")
+	public String main() {
+		return "main";
 	}
 	
 }
