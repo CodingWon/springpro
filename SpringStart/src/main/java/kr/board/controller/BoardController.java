@@ -18,7 +18,6 @@ public class BoardController {
 
 	@Autowired
 	private BoardMapper boardMapper;
-	
 	@RequestMapping("/boardList.do")
 	public String boardList (Model model) {
 		List<Board> list = boardMapper.getList();
