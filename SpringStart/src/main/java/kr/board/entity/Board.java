@@ -1,6 +1,8 @@
 package kr.board.entity;
 
-//@Data
+import lombok.Data;
+
+@Data
 public class Board {
 	private int idx;
 	private String title;
@@ -8,4 +10,5 @@ public class Board {
 	private String writer;
 	private String indate;
 	private int count;
+
 }
