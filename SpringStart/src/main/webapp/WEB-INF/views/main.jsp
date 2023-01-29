@@ -47,8 +47,24 @@
 						 <td>\${obj.count}</td>
 						 </tr>`
 				});			
-			listHtml+= `</table>`
+				listHtml+= `
+						<tr>
+							<td colspan='5'>
+							<button class ="btn btn-primary btn-sm" onclick ="goForm()">글쓰기</button>
+							</td>
+						</tr>
+						</table>`
   			$("#view").html(listHtml);		
+  	}
+  	
+  	function goForm(){
+  		$("#view").css("display","none"); // list 감추기
+  		$("#wForm").css("display","block"); // form 보이기
+  	}
+  	
+  	function goList(){
+  		$("#view").css("display","block"); // list 감추기
+  		$("#wForm").css("display","none"); // form 보이기
   	}
   </script>
 </head>
@@ -58,7 +74,32 @@
   <h2>Spring 02</h2>
   <div class="panel panel-default">
     <div class="panel-heading">Panel Heading</div>
-    <div class="panel-body" id="view">Panel Content</div>
+    <div class="panel-body" id="view">Panel Content </div>
+     <div class="panel-body" id="wForm" style="display:none">
+     	<form class="form-horizontal">
+			  <div class="form-group">
+			    <label class="control-label col-sm-2" for="title">제목</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" id="title"  name="title">
+			    </div>
+			  </div>
+		  	  <div class="form-group">
+			    <label class="control-label col-sm-2" for="id">내용</label>
+			    <div class="col-sm-10">
+			      <textarea row="14" class="form-control" id="content" name="content" ></textarea>
+			    </div>
+			  </div>
+		  	  <div class="form-group">
+			    <label class="control-label col-sm-2" for="writer">작성자</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" id="writer"  name="writer">
+			    </div>
+			  </div>
+			  <input type="button" class="btn btn-primary" value="등록">
+			  <input type="reset" class="btn btn-warn" value="취소" >
+			   <input type="button" class="btn btn-warn" onclick="goList()" value="리스트" >
+		  </form>
+	    </div>
     <div class="panel-footer">Panel footer</div>
   </div>
 </div>
