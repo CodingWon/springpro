@@ -29,6 +29,10 @@
   	  	
   	});
   	
+ 	function goContent(idx){
+  		$(`#c\${idx}` ).css("display","table-row");
+  	}
+  	
   	function loadList(){
   		//서버와 통신
   		$.ajax({
@@ -48,12 +52,17 @@
 					listHtml +=`
 					  		 <tr>
 						  		 <td>\${obj.idx}</td>
-						 		 <td><a href="">\${obj.title}</a></td>
+						 		 <td><a href="javascript:goContent(\${obj.idx})">\${obj.title}</a></td>
 								 <td>\${obj.writer}</td>
 								 <td>\${obj.indate}</td>
 								 <td>\${obj.count}</td>
 							 </tr>
-							 
+							 <tr id="c\${obj.idx}" style='display:none'>
+							 	<td>내용</td>
+							 	<td colspan='4'>
+							 		<textarea row='7' class='form-control'>\${obj.content}</textarea>
+							 	</td>
+							 </tr>`
 					});			
 					listHtml+= `
 							<tr>
@@ -95,6 +104,8 @@
   		
   		$("#fclear").trigger("click");
   	}
+  	
+ 
   </script>
 </head>
 <body>
