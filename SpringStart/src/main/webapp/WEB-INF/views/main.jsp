@@ -13,6 +13,20 @@
   <script type="text/javascript">
   	$(document).ready(()=>{
   		loadList();
+  		
+  	  	$("#wButton").click(()=>{
+  	  		goForm();
+  	  	
+  	  	});
+  	  	
+  	  	$("#listBtn").click(()=>{
+  	  		goList();
+  	  	});
+  	  	
+  	  	$("#insertBtn").click(()=>{
+  	  		goInsert();	
+  	  	})
+  	  	
   	});
   	
   	function loadList(){
@@ -21,15 +35,8 @@
   			url : "boardList.do",
   			type : "get",
   			dataType : "json",
-  			success : makeView,
-  			error : function(){alert("error");}
-  			
-  		})
-  	}
-  	
-  	function makeView(data){
-  		console.log(data);
-  		var listHtml =`<table class ="table table-bordered" >
+  			success : (data)=>{
+  				var listHtml =`<table class ="table table-bordered" >
 				  		 <tr>
 					  		<td>번호</td>
 					 		<td>제목</td>
@@ -37,25 +44,30 @@
 							<td>작성일</td>
 							<td>조회수</td>
 						</tr>`;
-			$.each(data,(index,obj) => {
-				listHtml +=`
-				  		 <tr>
-				  		 <td>\${obj.idx}</td>
-				 		 <td>\${obj.title}</td>
-						 <td>\${obj.writer}</td>
-						 <td>\${obj.indate}</td>
-						 <td>\${obj.count}</td>
-						 </tr>`
-				});			
-				listHtml+= `
-						<tr>
-							<td colspan='5'>
-							<button class ="btn btn-primary btn-sm" onclick ="goForm()">글쓰기</button>
-							</td>
-						</tr>
+				$.each(data,(index,obj) => {
+					listHtml +=`
+					  		 <tr>
+						  		 <td>\${obj.idx}</td>
+						 		 <td><a href="">\${obj.title}</a></td>
+								 <td>\${obj.writer}</td>
+								 <td>\${obj.indate}</td>
+								 <td>\${obj.count}</td>
+							 </tr>
+							 
+					});			
+					listHtml+= `
+							<tr>
+								<td colspan='5'>
+								<button id="wButton" class ="btn btn-primary btn-sm" onclick ="goForm()">글쓰기</button>
+								</td>
+							</tr>
 						</table>`
-  			$("#view").html(listHtml);		
+				$("#view").html(listHtml);
+  			},
+  			error : function(){alert("goList : error");}
+  		})
   	}
+  	
   	
   	function goForm(){
   		$("#view").css("display","none"); // list 감추기
@@ -65,6 +77,23 @@
   	function goList(){
   		$("#view").css("display","block"); // list 감추기
   		$("#wForm").css("display","none"); // form 보이기
+  	}
+  	
+  	function goInsert(){ 		
+  		var fData=$("#frm").serialize();
+  		
+  		$.ajax({
+  			url : "boardInsert.do",
+  			type : "post",
+  			data : fData,
+  			success : ()=>{
+  				loadList();
+  				goList();
+  			},
+  			error : ()=>{alert("insert : error");}
+  		});
+  		
+  		$("#fclear").trigger("click");
   	}
   </script>
 </head>
@@ -76,7 +105,7 @@
     <div class="panel-heading">Panel Heading</div>
     <div class="panel-body" id="view">Panel Content </div>
      <div class="panel-body" id="wForm" style="display:none">
-     	<form class="form-horizontal">
+     	<form id="frm" class="form-horizontal">
 			  <div class="form-group">
 			    <label class="control-label col-sm-2" for="title">제목</label>
 			    <div class="col-sm-10">
@@ -95,9 +124,9 @@
 			      <input type="text" class="form-control" id="writer"  name="writer">
 			    </div>
 			  </div>
-			  <input type="button" class="btn btn-primary" value="등록">
-			  <input type="reset" class="btn btn-warn" value="취소" >
-			   <input type="button" class="btn btn-warn" onclick="goList()" value="리스트" >
+			  <input type="button" class="btn btn-primary" id="insertBtn" value="등록">
+			  <input type="reset" class="btn btn-warn" id="fclear" value="취소" >
+			   <input type="button" class="btn btn-warn" id="listBtn" value="리스트" >
 		  </form>
 	    </div>
     <div class="panel-footer">Panel footer</div>
