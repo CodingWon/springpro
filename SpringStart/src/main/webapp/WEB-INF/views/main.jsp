@@ -130,14 +130,34 @@
  	}
  	
  	function goModify(idx){
+ 		// textarea 에 입력할 수 있게 되고
  		$("#textarea" + idx).attr("readonly",false);
- 		var newButton = `<button class="btn btn-warn">수정</button>`
  		
+ 		// button 이 수정 버튼으로 바뀌고
+ 		var newButton = `<button  onclick='goUpdate(\${idx})' class="btn btn-warn">수정</button>` 		
  		$("#modfiyBtn"+idx).html(newButton);	
+ 		
+ 		//title 도 수정할 수 있게 한다.
  		var title = $("#t"+idx).text();
- 	
- 		var newInput = `<input type ='text' class='form-control' value='\${title}' />`;
+ 		var newInput = `<input id='nt\${idx}' type ='text' class='form-control' value='\${title}' />`;
  		$("#t"+idx).html(newInput);
+ 	}
+ 	
+ 	function goUpdate(idx){
+ 		//수정 버튼 클릭 하면
+ 		// title 과 content 내용을 갖고 와서
+ 		var title = $("#nt"+idx).val();
+ 		var content = $("#textarea"+idx).val();
+ 		
+ 		//서버에 전송한다.
+		$.ajax({
+ 			url : "boardUpdate.do",
+ 			type : "get",
+ 			data : {"idx" : idx, "title" : title, "content" : content},
+ 			success : loadList,
+ 			error : function(){alert("error");}
+ 		}); 
+ 		
  	}
   </script>
 </head>
