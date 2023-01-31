@@ -36,4 +36,9 @@ public class BoardController {
 		boardMapper.boardInsert(board);
 	}
 	
+	@RequestMapping("/boardDelete.do")
+	public @ResponseBody void boardDelte(int idx) {
+		boardMapper.boardDelete(idx);
+	}
+	
 }

@@ -27,10 +27,18 @@
   	  		goInsert();	
   	  	})
   	  	
+  		
+  	  	
   	});
   	
  	function goContent(idx){
-  		$(`#c\${idx}` ).css("display","table-row");
+ 		if($("#c" + idx).css("display") == "none"){
+ 			$(`#c\${idx}` ).css("display","table-row");
+ 			$("#textarea" + idx).attr("readonly",true);
+ 		}else{
+ 			$(`#c\${idx}` ).css("display","none");
+ 		}
+  	
   	}
   	
   	function loadList(){
@@ -52,7 +60,7 @@
 					listHtml +=`
 					  		 <tr>
 						  		 <td>\${obj.idx}</td>
-						 		 <td><a href="javascript:goContent(\${obj.idx})">\${obj.title}</a></td>
+						 		 <td id="t\${obj.idx}"><a href="javascript:goContent(\${obj.idx})">\${obj.title}</a></td>
 								 <td>\${obj.writer}</td>
 								 <td>\${obj.indate}</td>
 								 <td>\${obj.count}</td>
@@ -60,7 +68,12 @@
 							 <tr id="c\${obj.idx}" style='display:none'>
 							 	<td>내용</td>
 							 	<td colspan='4'>
-							 		<textarea row='7' class='form-control'>\${obj.content}</textarea>
+							 		<textarea id="textarea\${obj.idx}" readonly row='7' class='form-control'>\${obj.content}</textarea>
+							 		<br>
+							 		<span id="modfiyBtn\${obj.idx}">
+							 			<button class = "btn btn-success btn-sm" onclick="goModify(\${obj.idx})">수정 화면</button>
+					 				</span>&nbsp
+							 		<button class = "btn btn-primary btn-sm" onclick="goDelete(\${obj.idx})">삭제 </button>
 							 	</td>
 							 </tr>`
 					});			
@@ -71,7 +84,7 @@
 								</td>
 							</tr>
 						</table>`
-				$("#view").html(listHtml);
+					$("#view").html(listHtml);
   			},
   			error : function(){alert("goList : error");}
   		})
@@ -105,7 +118,27 @@
   		$("#fclear").trigger("click");
   	}
   	
- 
+ 	function goDelete(idx){
+		$.ajax({
+			url : "boardDelete.do",
+			type : "post",
+			data : {"idx" : idx},
+			success : loadList,
+			error : function() {alert("error");}
+		})
+ 		
+ 	}
+ 	
+ 	function goModify(idx){
+ 		$("#textarea" + idx).attr("readonly",false);
+ 		var newButton = `<button class="btn btn-warn">수정</button>`
+ 		
+ 		$("#modfiyBtn"+idx).html(newButton);	
+ 		var title = $("#t"+idx).text();
+ 	
+ 		var newInput = `<input type ='text' class='form-control' value='\${title}' />`;
+ 		$("#t"+idx).html(newInput);
+ 	}
   </script>
 </head>
 <body>
