@@ -37,6 +37,16 @@
  			$("#textarea" + idx).attr("readonly",true);
  		}else{
  			$(`#c\${idx}` ).css("display","none");
+ 			$.ajax({
+ 				url : "boardCount.do",
+ 				type : "get",
+ 				data : {"idx" : idx},
+ 				dataType : "json",
+ 				success : function(data){
+ 					$("#cnt"+idx).html(data.count);
+ 				},
+ 				error : function() {alert("error");}
+ 			});
  		}
   	
   	}
@@ -63,7 +73,7 @@
 						 		 <td id="t\${obj.idx}"><a href="javascript:goContent(\${obj.idx})">\${obj.title}</a></td>
 								 <td>\${obj.writer}</td>
 								 <td>\${obj.indate}</td>
-								 <td>\${obj.count}</td>
+								 <td id="cnt\${obj.idx}">\${obj.count}</td>
 							 </tr>
 							 <tr id="c\${obj.idx}" style='display:none'>
 							 	<td>내용</td>
