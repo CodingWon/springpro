@@ -1,5 +1,7 @@
 package kr.board.entity;
 
+import java.util.Date;
+
 import lombok.Data;
 
 @Data

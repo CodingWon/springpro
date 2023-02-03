@@ -24,34 +24,4 @@ public class BoardController {
 		return "main";
 	}
 	
-	//@ResponseBody -> jackson-databind (객체-> JSON 데이터 포맷 변환)
-	@RequestMapping("/boardList.do")
-	public @ResponseBody List<Board> boardList(){
-		List<Board> list = boardMapper.getLists();
-		return list;
-	}
-	
-	@RequestMapping("/boardInsert.do")
-	public @ResponseBody void boardInsert(Board board) {
-		boardMapper.boardInsert(board);
-	}
-	
-	@RequestMapping("/boardDelete.do")
-	public @ResponseBody void boardDelte(int idx) {
-		boardMapper.boardDelete(idx);
-	}
-	
-	@RequestMapping("/boardUpdate.do")
-	public @ResponseBody void boardUpdate(Board board) {
-		boardMapper.boardUpdate(board);
-	}
-	
-	
-	@RequestMapping("/boardCount.do")
-	public @ResponseBody Board boardCount(int idx) {
-		boardMapper.boardCount(idx);
-		Board vo = boardMapper.boardContent(idx);
-		return vo;
-		
-	}
 }

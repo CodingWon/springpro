@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  
+ <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
+	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,9 +39,8 @@
  		}else{
  			$(`#c\${idx}` ).css("display","none");
  			$.ajax({
- 				url : "boardCount.do",
- 				type : "get",
- 				data : {"idx" : idx},
+ 				url : "board/count/"+idx,
+ 				type : "put",
  				dataType : "json",
  				success : function(data){
  					$("#cnt"+idx).html(data.count);
@@ -54,7 +54,7 @@
   	function loadList(){
   		//서버와 통신
   		$.ajax({
-  			url : "boardList.do",
+  			url : "board/all",
   			type : "get",
   			dataType : "json",
   			success : (data)=>{
@@ -72,7 +72,7 @@
 						  		 <td>\${obj.idx}</td>
 						 		 <td id="t\${obj.idx}"><a href="javascript:goContent(\${obj.idx})">\${obj.title}</a></td>
 								 <td>\${obj.writer}</td>
-								 <td>\${obj.indate}</td>
+								 <td>\${obj.indate.split(' ')[0]}</td>
 								 <td id="cnt\${obj.idx}">\${obj.count}</td>
 							 </tr>
 							 <tr id="c\${obj.idx}" style='display:none'>
@@ -115,7 +115,7 @@
   		var fData=$("#frm").serialize();
   		
   		$.ajax({
-  			url : "boardInsert.do",
+  			url : "board/new",
   			type : "post",
   			data : fData,
   			success : ()=>{
@@ -130,9 +130,8 @@
   	
  	function goDelete(idx){
 		$.ajax({
-			url : "boardDelete.do",
-			type : "post",
-			data : {"idx" : idx},
+			url : "board/" + idx,
+			type : "delete",
 			success : loadList,
 			error : function() {alert("error");}
 		})
@@ -161,9 +160,10 @@
  		
  		//서버에 전송한다.
 		$.ajax({
- 			url : "boardUpdate.do",
- 			type : "get",
- 			data : {"idx" : idx, "title" : title, "content" : content},
+ 			url : "board/update",
+ 			type : "put",
+ 			contentType : 'application/json;charset=utf-8',
+ 			data : JSON.stringify({"idx" : idx, "title" : title, "content" : content}),
  			success : loadList,
  			error : function(){alert("error");}
  		}); 
