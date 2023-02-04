@@ -12,4 +12,5 @@ import kr.board.entity.Member;
 public interface MemberMapper {
 
 	public Member registerChekc(String memID);
+	public int register(Member m);
 }
