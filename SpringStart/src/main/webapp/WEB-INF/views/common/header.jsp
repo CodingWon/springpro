@@ -13,7 +13,7 @@
     </div>
 	    <div class="collapse navbar-collapse" id="myNavbar">
 	      <ul class="nav navbar-nav">
-	        <li class="active"><a href="${contextPath}/">Home</a></li>
+	        <li class="active"><a href="<c:url value='/' />">Home</a></li>
 	        
 	        <li><a href="#">Page 2</a></li>
 	        <li><a href="boardMain.do">게시판</a></li>

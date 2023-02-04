@@ -5,11 +5,37 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>Insert title here</title>
 <meta charset="UTF-8">
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<title>Insert title here</title>
+	<script type="text/javascript">
+		function registerChk(){
+			var memID = $("#memID").val();
+			console.log(memID);
+	 		$.ajax({
+				url : "<c:url value='/memRegisterCheck.do' />",
+				type:"get",
+				data : {"memID" : memID},
+				success : function(result){
+					// 중복 유무 출력(result =1 사용할 수 있는 아이디 , result =0 사용할 수 없는 아이디)
+					if(result==1){
+						$("#checkMessage").html("사용할 수 있는 아이디 입니다.");
+						$("#checkType").attr("class","modal-content panel-success");
+					}else{
+						$("#checkMessage").html("사용할 수 없는 아이디 입니다.");
+						$("#checkType").attr("class","modal-content panel-warning");
+					}
+					
+					$("#myModal").modal("show");
+				}, 
+				error : ()=>{alert("error");}
+			}) 
+		}
+	
+	
+	</script>
 </head>
 <body>
 
@@ -24,7 +50,7 @@
 		    			<tr>
 		    				<td style="width: 110px; vertical-align:middle;">아이디</td>
 		    				<td><input id="memID" name="memID" class="form-control" type="text" maxlength="20" placeholder ="아이디 입력 하세요" /></td>
-		    				<td><button class="btn btn-primary btn-sm" onclick ="registerChk();">중복 확인</button></td>		    				
+		    				<td><button type="button" class="btn btn-primary btn-sm" onclick ="registerChk();">중복 확인</button></td>		    				
 		    			</tr>
     					<tr>
 		    				<td style="width: 110px; vertical-align:middle;">비밀번호</td>
@@ -70,6 +96,26 @@
 		    		</table>
 		    	</form> 
 		    </div>
+		    <!-- 다일로그창 -->
+		    <!-- Modal -->
+					<div id="myModal" class="modal fade" role="dialog">
+					  <div class="modal-dialog">
+					  
+					    <!-- Modal content-->
+					    <div id="checkType" class="modal-content panel-info">
+					      <div class="modal-header panel-heading">
+					        <button type="button" class="close" data-dismiss="modal">&times;</button>
+					        <h4 class="modal-title">메시지 확인</h4>
+					      </div>
+					      <div class="modal-body">
+					        <p id="checkMessage"></p>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
 		  </div>
 		</div>
 </body>
