@@ -13,4 +13,6 @@ public interface MemberMapper {
 
 	public Member registerChekc(String memID);
 	public int register(Member m);
+	
+	public Member memLogin(Member vo);
 }
